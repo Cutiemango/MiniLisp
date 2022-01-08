@@ -5,7 +5,7 @@ do
     filename=$(basename -s .lsp $f) # lsp filename without extension
     ans="${f%.*}.ans"               # /path/to/lsp.ans
 
-    # gernerate answers if not presented
+    # generate answers if not present
     if [[ ! -f $ans ]]; then
         ./smli/smli < $f &> $ans
     fi

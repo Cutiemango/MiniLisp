@@ -3,9 +3,9 @@ from typing import Callable
 import re
 import argparse
 import sys
-sys.tracebacklimit = 0
 
 
+# environment, represents a variable scope
 class Env(dict):
     def __init__(self, params=(), args=(), outer=None):
         super().__init__()
@@ -17,6 +17,7 @@ class Env(dict):
         return self.outer[key] if self.outer else None
 
 
+# an anonymous function
 class Lambda(Callable):
     def __init__(self, params, body, env):
         self.params = params
@@ -103,12 +104,12 @@ def eval_lambda(args, env: Env):
     return Lambda(params, body, env)
 
 
-def eval(x: Exp, env: Env):
-    if isinstance(x, Symbol) or isinstance(x, Number):
-        return find_symbol(x, env)
+def eval(exp: Exp, env: Env):
+    if isinstance(exp, Symbol) or isinstance(exp, Number):
+        return find_symbol(exp, env)
 
-    # x is an unevaluated expression, unwrap the expression
-    op, *args = x
+    # exp is an unevaluated expression, unwrap the expression
+    op, *args = exp
 
     if isinstance(op, Number): return op  # unwrap number
 
@@ -186,6 +187,7 @@ def run_interpreter(input_str: str, verbose=False):
 
 
 def main():
+    sys.tracebacklimit = 0
     parser = argparse.ArgumentParser()
     parser.add_argument("-debug", dest="verbose", action="store_const", const=True, default=False, help="Debug mode")
 
