@@ -2,6 +2,8 @@ from operators import *
 from typing import Callable
 import re
 import argparse
+import sys
+sys.tracebacklimit = 0
 
 
 class Env(dict):
